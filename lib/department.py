@@ -52,7 +52,7 @@ class Department:
     @classmethod
     def create(cls, name, location):
         """ Initialize a new Department instance and save the object to the database """
-        department = Department(name, location)
+        department = cls(name, location)
         department.save()
         return department
 
@@ -81,7 +81,7 @@ class Department:
         """Return a Department object having the attribute values from the table row."""
 
         # Check the dictionary for an existing instance using the row's primary key
-        department = Department.all.get(row[0])
+        department = cls.all.get(row[0])
         if department:
             # ensure attributes match row values in case local object was modified
             department.name = row[1]
@@ -90,7 +90,7 @@ class Department:
             # not in dictionary, create new instance and add to dictionary
             department = cls(row[1], row[2])
             department.id = row[0]
-            Department.all[department.id] = department
+            cls.all[department.id] = department
         return department
 
     @classmethod
